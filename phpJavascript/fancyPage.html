@@ -1,11 +1,14 @@
-
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Shopify Programming Challenge (Fancy Page)</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script>
 			var jsonData;
+			/* get JSON data from php script
+			 *	the JSON data will be returned in the form of an array in which each element
+			 *	contains one page's worth of JSON data
+			*/
 			$.getJSON("getJSON.php", function(data){
 					jsonData = data;
 					foo();
@@ -14,31 +17,30 @@
 			function foo(){
 				var str = "";
 				var totalPrice = 0;
+				/*loop through each page of JSON data, filtering for watches and clocks */
 				for(var i = 0; i < jsonData.length; i++){	//for each page
 					for(var j = 0; j < jsonData[i]["products"].length; j++){//for each product
-						if(jsonData[i]["products"][j].hasOwnProperty("price")){alert("foo");}
-						for(var k = 0; k < jsonData[i]["products"][j]["variants"].length; k++){//for each variant
-							totalPrice += parseFloat(jsonData[i]["products"][j]["variants"][k].price);
-							if(jsonData[i]["products"][j]["variants"][k].compare_at_price != null){
-								alert("tits");
+						if(jsonData[i]["products"][j].product_type.toLowerCase()=="clock" 
+							|| jsonData[i]["products"][j].product_type.toLowerCase()=="watch"
+						){
+							for(var k = 0; k < jsonData[i]["products"][j]["variants"].length; k++){//for each variant
+								totalPrice += parseFloat(jsonData[i]["products"][j]["variants"][k].price);
 							}
 						}
 					}
 				}
-				str += totalPrice;
+				str += "$" + totalPrice.toFixed(2);
 				$("#prodInfo").prepend(str);
 			}
 		</script>
 	</head>
 	<body>
-		
 		<div id="main">
 			<h1 class="centered">Welcome to my solution page (fancy edition)</h1>
 			<p class="centered">
-	Programming Challenge Solution (In development stage)
-	<br />
-	
-	</p>
+				Programming Challenge Solution (In development stage)
+				<br />
+			</p>
 		</div>
 		<div id="prodInfo"></div>
 	</body>
