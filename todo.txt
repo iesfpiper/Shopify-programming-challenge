@@ -1,0 +1,1 @@
+modify phpAndjavascript and java code to include the filter for watches and clocks.  
