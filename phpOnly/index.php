@@ -59,13 +59,15 @@
 							<th>Price</th>';
 					foreach($objArr as $productPage){
 						foreach($productPage->products as $product){
-							foreach($product->variants as $variant){
-								echo '<tr>';
-								$totalPrice += $variant->price;
-								echo '<td>' . $product->title . '</td>';
-								echo '<td>' . $variant->title . '</td>';
-								echo '<td>$' . $variant->price . '</td>';
-								echo '</tr>';
+							if(strtolower($product->type) == "watch" or strtolower($product->type == "clock")){
+								foreach($product->variants as $variant){
+									echo '<tr>';
+									$totalPrice += $variant->price;
+									echo '<td>' . $product->title . '</td>';
+									echo '<td>' . $variant->title . '</td>';
+									echo '<td>$' . $variant->price . '</td>';
+									echo '</tr>';
+								}
 							}
 						}
 					}
