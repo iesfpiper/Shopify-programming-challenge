@@ -14,10 +14,12 @@ while($extractedData.products.length -gt 0){
 
 foreach($page in $webDataArray){
     foreach($product in $page.products){
-        foreach($variants in $product.variants){
-            foreach($variant in $variants){
-                $variant.price
-                $totalPrice += $variant.price
+    if(($product.product_type).toLower().compareTo("clock") -eq 0 -or ($product.product_type).toLower().compareTo("watch") -eq 0){
+            foreach($variants in $product.variants){
+                foreach($variant in $variants){
+                    $variant.price
+                    $totalPrice += $variant.price
+                }
             }
         }
     }
