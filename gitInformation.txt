@@ -1,0 +1,25 @@
+Information about the git layout for this repository
+
+This repository is hosted on two servers.  
+
+origin  https://github.com/iesfpiper/Shopify-programming-challenge.git (fetch)
+origin  https://github.com/iesfpiper/Shopify-programming-challenge.git (push)
+ubuntuLocal     stephen@ubuntuserver:~/git/repositories/hosted/Shopify-programming-challenge (fetch)
+ubuntuLocal     stephen@ubuntuserver:~/git/repositories/hosted/Shopify-programming-challenge (push)
+ubuntuRemote    ssh://stephen@onwipa947.dyndns.org:2222/~/git/repositories/hosted/Shopify-programming-challenge (fetch)
+ubuntuRemote    ssh://stephen@onwipa947.dyndns.org:2222/~/git/repositories/hosted/Shopify-programming-challenge (push)
+
+The above list details the connections
+
+the gitHub server was used to create this repository
+
+it is stored on: 
+	- locally on the stephend1 (formerly Lenovot420) workstation 
+	- ubuntuServer in the lab environment.  
+
+The connections to the ubuntuServer can be:
+	- ubuntuLocal: 		uses the local DNS name within the lab environment
+	- ubuntuRemote: 	uses the DDNS address of the house to port forward to
+				ubuntuServer's ssh client on port 2222
+
+This file should serve to test how commits push to both of the servers.  
