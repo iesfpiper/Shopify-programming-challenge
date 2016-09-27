@@ -1,5 +1,6 @@
 import json, urllib2
 
+#initialize price to 0 
 totalPrice = 0
 
 #initialize web page information
