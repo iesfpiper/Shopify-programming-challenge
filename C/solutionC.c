@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #define BUFFER_SIZE  (256 * 1024)  /* 256 KB */
-#define DEBUG 1
+#define DEBUG 0
 
 struct write_result
 {
@@ -96,27 +96,29 @@ error:
 }
 
 int main(void){
+	//loop iterators
 	int i, j;
+	
+	//web request variables
 	char* text;
-	json_t *root;
-	json_error_t error;
-	
-	json_t * products; //products array
-	json_t * product;
-	json_t * prodType;
-	const char * strProdType;
-	json_t * variants;
-	json_t * variant;
-	json_t * price;
-	double dblPrice; 
-	const char* strPrice;
-	const char* strTitle;
-	
 	char * urlBlank = "http://shopicruit.myshopify.com/products.json?page=";
 	int page = 1;
 	char strPage[3];
 	char url[1000];
 	double totalPrice = 0;
+	
+	//json variables
+	json_t *root;
+	json_error_t error;
+	json_t * products; 			//product array
+	json_t * product; 			//product object
+	json_t * prodType;			//product element
+	const char * strProdType;	
+	json_t * variants;			//variant array
+	json_t * variant;			//variant object
+	json_t * price;				//variant element
+	double dblPrice; 
+	const char* strPrice;
 	
 	
 	/*for reasons including how motivated I am, and perhaps it being the best choice given
@@ -133,7 +135,6 @@ int main(void){
 		
 		//get JSON data from page
 		text = request(url);
-		//printf("\n%s\n", text);
 		
 		//parse JSON data
 		root = json_loads(text, 0, &error);
@@ -141,23 +142,31 @@ int main(void){
 		//check for existance of products
 		if(! (int)json_array_size(products))
 			break;
+		//if we are here, there must be at least one product
 		for(i = 0; i < (int) json_array_size(products); i++){
+			//extract product from array
 			product = json_array_get(products, i);
 			prodType = json_object_get(product, "product_type");
 			strProdType = json_string_value(prodType);
 			if(DEBUG)printf("%s\n", strProdType);
+			//verify product is a clock or watch (note: we assume no need for lower case in product type)
 			if(!strcmp(strProdType,"Clock") || !strcmp(strProdType, "Watch")){
+				//get variants
 				variants = json_object_get(product, "variants");
 				for(j = 0; j < (int) json_array_size(variants); j++){
+					//extract variant object
 					variant = json_array_get(variants, j);
+					//extract price
 					price = json_object_get(variant, "price");
 					strPrice = json_string_value(price);		
 					sscanf(strPrice, "%lf", &dblPrice);
+					//add to total
 					totalPrice += dblPrice;
 					if(DEBUG)printf("price is %f", dblPrice);
 				}
 			}
 		}
+		//increase page for next iteration
 		page++;
 	}
 	printf("\nTotal Price: %lf\n", totalPrice);
